@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Page metadata and shared stylesheet and behavior. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In | Cainta One Express</title>
+    <meta name="description" content="Sign in or create a Cainta One Express account." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="account-page">
+    <!-- Compact header returns to the home page. -->
+    <header>
+      <div class="container account-nav">
+        <a class="account-brand" href="main.html#home" aria-label="Cainta One Express home">
+          <span class="logo-mark" aria-hidden="true">
+            <img src="favicon.svg" alt="" width="46" height="46" />
+          </span>
+          <span>Cainta One Express</span>
+        </a>
+        <a class="nav-cta" href="main.html#home">Home</a>
+      </div>
+    </header>
+
+    <!-- Account page pairs an introduction with the sign-in/create-account form. -->
+    <main class="account-layout">
+      <section class="account-welcome" aria-label="Account access">
+        <div>
+          <p class="account-kicker">Cainta One Express</p>
+          <h1>Move with one account.</h1>
+          <p>Sign in to manage your local delivery requests and keep your details together.</p>
+        </div>
+        <p class="account-welcome-note">Serving Cainta, Rizal and nearby communities.</p>
+      </section>
+
+      <section class="account-content" aria-labelledby="account-heading">
+        <div id="account-form-panel">
+          <!-- JavaScript switches between sign-in and account creation fields. -->
+          <div class="account-switch" role="group" aria-label="Choose account action">
+            <button type="button" data-account-mode="signin" aria-pressed="true">Sign In</button>
+            <button type="button" data-account-mode="create" aria-pressed="false">Create Account</button>
+          </div>
+
+          <h2 id="account-heading">Welcome back</h2>
+          <p class="account-intro" id="account-intro">Sign in to your Cainta One Express account.</p>
+
+          <form class="account-form" id="account-form">
+            <div class="account-field" id="account-name-field" hidden>
+              <label for="account-name">Full name</label>
+              <input id="account-name" name="name" type="text" autocomplete="name" />
+            </div>
+            <div class="account-field">
+              <label for="account-email">Email address</label>
+              <input id="account-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="account-field" id="account-phone-field" hidden>
+              <label for="account-phone">Mobile phone number</label>
+              <input id="account-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+639123456789" pattern="\+[1-9][0-9]{7,14}" title="Use international format, for example +639123456789." />
+              <p class="account-field-help">Include your country code. We’ll text a one-time verification code.</p>
+              <button class="account-secondary" id="account-send-code" type="button">Send SMS Code</button>
+            </div>
+            <div class="account-field" id="account-code-field" hidden>
+              <label for="account-code">SMS verification code</label>
+              <input id="account-code" name="verification-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{4,10}" maxlength="10" placeholder="Enter the code" />
+              <button class="account-secondary" id="account-verify-code" type="button">Verify Phone</button>
+            </div>
+            <div class="account-field">
+              <label for="account-password">Password</label>
+              <input id="account-password" name="password" type="password" autocomplete="current-password" minlength="8" required />
+            </div>
+            <button class="account-submit" id="account-submit" type="submit">Sign In</button>
+          </form>
+
+          <!-- This prototype stores account data in this browser, not a database. -->
+          <p class="account-security-note">SMS verification uses Twilio. This prototype still stores account details in this browser, not a secure account database. Do not use a real or reused password.</p>
+        </div>
+
+        <!-- Shown after sign-in; the status message announces updates accessibly. -->
+        <div class="account-panel" id="account-panel" hidden>
+          <h2>You’re signed in</h2>
+          <p><strong id="account-name-display"></strong><br /><span id="account-email-display"></span></p>
+          <button class="account-sign-out" id="account-sign-out" type="button">Sign Out</button>
+        </div>
+        <p class="account-message" id="account-message" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+  </body>
+</html>

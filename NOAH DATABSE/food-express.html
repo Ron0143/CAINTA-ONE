@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Page setup: encoding, responsive viewport, browser title, and search description. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Express Orders</title>
+    <meta
+      name="description"
+      content="Order food essentials and fresh items through Cainta One Express Food Express."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <style>
+      /* Page-specific styles keep the order form centered and readable. */
+      body {
+        background: #f5f7f2;
+      }
+
+      .order-page {
+        max-width: 1240px;
+        margin: 42px auto 80px;
+        padding: 0 16px;
+      }
+
+      .order-shell {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(18, 50, 83, 0.08);
+        border-radius: 24px;
+        box-shadow: 0 25px 60px rgba(18, 50, 83, 0.12);
+        overflow: hidden;
+      }
+
+      .order-header {
+        background: linear-gradient(135deg, #1f72d8, #123253);
+        color: #fff;
+        padding: 28px 30px;
+      }
+
+      .order-header h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 3vw, 3rem);
+      }
+
+      .order-header p {
+        margin: 0;
+        color: rgba(255,255,255,0.85);
+      }
+
+      .order-grid {
+        /* Desktop layout places the form and service details side by side. */
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+
+      .order-form-wrap,
+      .order-info {
+        padding: 32px 30px;
+      }
+
+      .order-form-wrap {
+        border-right: 1px solid rgba(18, 50, 83, 0.08);
+      }
+
+      .order-form {
+        display: grid;
+        gap: 18px;
+      }
+
+      .field-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      label {
+        font-weight: 700;
+        color: #123253;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid #dfe7f1;
+        border-radius: 12px;
+        padding: 12px 14px;
+        font: inherit;
+        background: #f9fbff;
+        color: var(--text);
+      }
+
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+
+      .submit-btn {
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #f7a93b, #f29d34);
+        color: #fff;
+        font-weight: 800;
+        padding: 14px 18px;
+        cursor: pointer;
+      }
+
+      .order-info {
+        background: #f6fafe;
+      }
+
+      .info-box {
+        background: #fff;
+        border-radius: 16px;
+        padding: 18px;
+        border: 1px solid rgba(18, 50, 83, 0.08);
+        margin-bottom: 18px;
+      }
+
+      .info-box h3 {
+        margin-bottom: 8px;
+      }
+
+      .status-box {
+        margin-top: 18px;
+        padding: 16px 18px;
+        background: #eaf6ef;
+        color: #155034;
+        border-radius: 14px;
+        border: 1px solid rgba(21, 80, 52, 0.18);
+        display: none;
+      }
+
+      .status-box.show {
+        display: block;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .menu-intro {
+        margin: 0 0 28px;
+      }
+
+      .menu-kicker,
+      .cart-kicker {
+        color: #c83228;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .menu-intro h1 {
+        margin: 5px 0 8px;
+        color: #1b3028;
+        font-size: clamp(2rem, 4vw, 3rem);
+        letter-spacing: 0;
+      }
+
+      .menu-intro p:last-child {
+        max-width: 620px;
+        color: #647168;
+      }
+
+      .menu-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 340px;
+        align-items: start;
+        gap: 30px;
+        min-width: 0;
+      }
+
+      .menu-catalog,
+      .cart-panel {
+        min-width: 0;
+      }
+
+      .menu-toolbar {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .menu-toolbar h2,
+      .cart-panel h2 {
+        margin-top: 2px;
+        color: #1b3028;
+        font-size: 1.45rem;
+      }
+
+      .menu-search {
+        display: grid;
+        gap: 5px;
+        width: min(260px, 100%);
+        color: #526258;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .menu-search input,
+      .checkout-form input,
+      .checkout-form select,
+      .checkout-form textarea {
+        min-height: 44px;
+        border: 1px solid #d6ded5;
+        border-radius: 8px;
+        background: #fff;
+        padding: 10px 12px;
+        color: #1b3028;
+        font: inherit;
+      }
+
+      .menu-search input:focus,
+      .checkout-form input:focus,
+      .checkout-form select:focus,
+      .checkout-form textarea:focus {
+        outline: 3px solid rgba(200, 50, 40, 0.16);
+        border-color: #c83228;
+      }
+
+      .category-tabs {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 2px 0 14px;
+        scrollbar-width: none;
+      }
+
+      .category-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .category-tabs button {
+        flex: 0 0 auto;
+        min-height: 38px;
+        border: 1px solid #d6ded5;
+        border-radius: 999px;
+        background: #fff;
+        color: #435148;
+        padding: 0 15px;
+        font: inherit;
+        font-size: 0.88rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .category-tabs button[aria-pressed="true"] {
+        border-color: #c83228;
+        background: #c83228;
+        color: #fff;
+      }
+
+      .restaurant-note {
+        margin: -5px 0 14px;
+        color: #647168;
+        font-size: 0.78rem;
+      }
+
+      .food-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .food-card {
+        overflow: hidden;
+        border: 1px solid #e1e6df;
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .food-card img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        background: #e9eee7;
+      }
+
+      .food-card-content {
+        display: grid;
+        gap: 8px;
+        padding: 13px;
+      }
+
+      .food-card h3 {
+        color: #1b3028;
+        font-size: 1rem;
+        line-height: 1.3;
+      }
+
+      .food-card p {
+        min-height: 38px;
+        color: #647168;
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+
+      .food-card-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 3px;
+      }
+
+      .food-price {
+        color: #1b3028;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .add-food-button {
+        min-height: 36px;
+        border: 0;
+        border-radius: 6px;
+        background: #f5c84c;
+        color: #312600;
+        padding: 0 12px;
+        font: inherit;
+        font-size: 0.82rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .add-food-button:hover {
+        background: #f0bb2e;
+      }
+
+      .empty-menu {
+        grid-column: 1 / -1;
+        padding: 28px 0;
+        color: #647168;
+      }
+
+      .cart-panel {
+        position: sticky;
+        top: 98px;
+        border: 1px solid #e1e6df;
+        border-radius: 8px;
+        background: #fff;
+        padding: 18px;
+      }
+
+      .cart-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e8ece6;
+      }
+
+      .cart-heading h2 span {
+        display: inline-grid;
+        place-items: center;
+        min-width: 24px;
+        height: 24px;
+        margin-left: 4px;
+        border-radius: 50%;
+        background: #f5c84c;
+        color: #312600;
+        font-size: 0.75rem;
+        vertical-align: 3px;
+      }
+
+      .cart-empty {
+        padding: 18px 0;
+        color: #647168;
+        font-size: 0.9rem;
+      }
+
+      .cart-lines {
+        display: grid;
+        gap: 12px;
+        max-height: 240px;
+        overflow-y: auto;
+        padding: 14px 0;
+      }
+
+      .cart-line {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .cart-line h3 {
+        color: #1b3028;
+        font-size: 0.87rem;
+      }
+
+      .cart-line p {
+        margin-top: 2px;
+        color: #647168;
+        font-size: 0.8rem;
+      }
+
+      .quantity-control {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .quantity-control button {
+        width: 28px;
+        height: 28px;
+        border: 1px solid #d6ded5;
+        border-radius: 50%;
+        background: #fff;
+        color: #1b3028;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .quantity-control span {
+        min-width: 14px;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 0;
+        border-top: 1px solid #e8ece6;
+        color: #1b3028;
+        font-weight: 800;
+      }
+
+      .checkout-form {
+        display: grid;
+        gap: 10px;
+      }
+
+      .checkout-form h3 {
+        margin: 2px 0 1px;
+        color: #1b3028;
+        font-size: 1rem;
+      }
+
+      .checkout-form label {
+        display: grid;
+        gap: 5px;
+        color: #526258;
+        font-size: 0.78rem;
+      }
+
+      .checkout-form textarea {
+        min-height: 72px;
+        resize: vertical;
+      }
+
+      .checkout-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .checkout-form label,
+      .checkout-form input,
+      .checkout-form select,
+      .checkout-form textarea {
+        min-width: 0;
+      }
+
+      .place-order-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 48px;
+        margin-top: 3px;
+        border: 0;
+        border-radius: 7px;
+        background: #c83228;
+        color: #fff;
+        padding: 0 14px;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .place-order-button:disabled {
+        background: #b7beb8;
+        cursor: not-allowed;
+      }
+
+      .menu-status {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 7px;
+        background: #edf7ee;
+        color: #245c34;
+        font-size: 0.86rem;
+      }
+
+      .menu-status.is-error {
+        background: #fff0ec;
+        color: #9e2e24;
+      }
+
+      /* Stack the columns and tighten spacing on smaller screens. */
+      @media (max-width: 760px) {
+        .order-grid,
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+
+        .menu-layout {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .cart-panel {
+          position: static;
+        }
+
+        .order-form-wrap,
+        .order-info {
+          padding: 22px 18px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav .logo {
+          flex-shrink: 0;
+        }
+
+        .nav .logo > span:last-child {
+          white-space: nowrap;
+          font-size: 0.9rem;
+        }
+
+        .nav .nav-cta {
+          padding: 10px 12px;
+          font-size: 0.84rem;
+          white-space: nowrap;
+        }
+
+        .menu-toolbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .menu-search {
+          width: 100%;
+        }
+
+        .food-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+        }
+
+        .food-card-content {
+          padding: 10px;
+        }
+
+        .food-card-bottom {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .add-food-button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Shared site navigation links back to the main page and app download. -->
+    <header>
+      <div class="container nav">
+        <a href="main.html#home" class="logo" aria-label="Cainta One Express home">
+          <span class="logo-mark" aria-hidden="true">
+            <img src="favicon.svg" alt="" width="46" height="46" />
+          </span>
+          <span>Cainta One Express</span>
+        </a>
+
+        <nav class="nav-menu" aria-label="Main navigation">
+          <a href="main.html#home">Home</a>
+          <a href="main.html#services">Services</a>
+          <a href="main.html#about">About</a>
+          <a href="main.html#process">Process</a>
+        </nav>
+
+        <a href="download-app.html" class="nav-cta">Download App</a>
+      </div>
+    </header>
+
+    <!-- Main ordering area switches between the Food Express menu and Bazaar form. -->
+    <main class="order-page">
+      <section class="menu-intro" id="menu-intro">
+        <p class="menu-kicker">Food Express</p>
+        <h1>Good food, ready to go.</h1>
+        <p>Pick your favorites, build your order, and choose a delivery time for Cainta and nearby areas.</p>
+      </section>
+
+      <div class="menu-layout" id="food-menu">
+        <section class="menu-catalog" aria-label="Food Express menu">
+          <div class="menu-toolbar">
+            <div>
+              <p class="menu-kicker">Made for your day</p>
+              <h2>Choose your favorites</h2>
+            </div>
+            <label class="menu-search" for="menu-search">
+              Search the menu
+              <input id="menu-search" type="search" placeholder="Try chicken, rice, drinks..." />
+            </label>
+          </div>
+
+          <div class="category-tabs" id="category-tabs" role="group" aria-label="Filter menu by category">
+            <button type="button" data-category="All" aria-pressed="true">All</button>
+            <button type="button" data-category="Meals" aria-pressed="false">Meals</button>
+            <button type="button" data-category="Sides" aria-pressed="false">Sides</button>
+            <button type="button" data-category="Snacks" aria-pressed="false">Snacks</button>
+            <button type="button" data-category="Desserts" aria-pressed="false">Desserts</button>
+            <button type="button" data-category="Drinks" aria-pressed="false">Drinks</button>
+          </div>
+
+          <div class="category-tabs" id="restaurant-tabs" role="group" aria-label="Filter menu by restaurant">
+            <button type="button" data-restaurant="All" aria-pressed="true">All menus</button>
+            <button type="button" data-restaurant="Food Express" aria-pressed="false">Food Express</button>
+            <button type="button" data-restaurant="Jollibee" aria-pressed="false">Jollibee</button>
+            <button type="button" data-restaurant="McDo" aria-pressed="false">McDo</button>
+          </div>
+          <p class="restaurant-note">Popular Jollibee and McDo selections are for reference. Prices are estimates, photos are illustrative, and orders are not sent to those restaurants.</p>
+
+          <div class="food-grid" id="food-grid" aria-live="polite"></div>
+        </section>
+
+        <aside class="cart-panel" aria-label="Your order">
+          <div class="cart-heading">
+            <div>
+              <p class="cart-kicker">Your order</p>
+              <h2>Order summary <span id="cart-count">0</span></h2>
+            </div>
+          </div>
+          <p class="cart-empty" id="cart-empty">Your cart is empty. Add something delicious to get started.</p>
+          <div class="cart-lines" id="cart-lines" aria-live="polite"></div>
+          <div class="cart-total">
+            <span>Subtotal</span>
+            <strong id="cart-subtotal">₱0</strong>
+          </div>
+
+          <form class="checkout-form" id="menu-checkout">
+            <h3>Delivery details</h3>
+            <div class="checkout-row">
+              <label for="menu-customer-name">Name
+                <input id="menu-customer-name" name="customer-name" autocomplete="name" required />
+              </label>
+              <label for="menu-phone-number">Phone
+                <input id="menu-phone-number" name="phone-number" type="tel" autocomplete="tel" required />
+              </label>
+            </div>
+            <label for="menu-delivery-address">Delivery address
+              <textarea id="menu-delivery-address" name="delivery-address" placeholder="House number, street, barangay" required></textarea>
+            </label>
+            <div class="checkout-row">
+              <label for="menu-delivery-date">Delivery date
+                <input id="menu-delivery-date" name="delivery-date" type="date" required />
+              </label>
+              <label for="menu-payment-method">Payment
+                <select id="menu-payment-method" name="payment-method">
+                  <option>Cash on Delivery</option>
+                  <option>GCash</option>
+                  <option>Bank Transfer</option>
+                </select>
+              </label>
+            </div>
+            <button class="place-order-button" id="place-order-button" type="submit" disabled>
+              <span>Place order</span>
+              <span id="checkout-total">₱0</span>
+            </button>
+          </form>
+          <p class="menu-status" id="menu-order-status" role="status" aria-live="polite" hidden></p>
+        </aside>
+      </div>
+
+      <!-- The free-text order form remains available for the Online Bazaar route. -->
+      <div class="order-shell" id="bazaar-order" hidden>
+        <div class="order-header">
+          <h1 id="order-title">Online Bazaar Order</h1>
+          <p id="order-description">Shop apparel, accessories, and everyday finds with convenient local delivery.</p>
+        </div>
+
+        <div class="order-grid">
+          <div class="order-form-wrap">
+            <!-- Required fields use browser validation before the form can submit. -->
+            <form class="order-form" id="food-order-form">
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="customer-name">Full Name</label>
+                  <input id="customer-name" name="customer-name" type="text" placeholder="Your name" required />
+                </div>
+
+                <div class="field-group">
+                  <label for="phone-number">Phone Number</label>
+                  <input id="phone-number" name="phone-number" type="tel" placeholder="09*********" required />
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="delivery-address">Delivery Address</label>
+                <textarea id="delivery-address" name="delivery-address" placeholder="House number, street, barangay, city" required></textarea>
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="order-items">Item / Product</label>
+                  <input id="order-items" name="order-items" type="text" placeholder="e.g. Rice, eggs, vegetables" required />
+                </div>
+
+                <div class="field-group">
+                  <label for="quantity">Quantity</label>
+                  <input id="quantity" name="quantity" type="number" min="1" value="1" required />
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="delivery-date">Preferred Delivery Date</label>
+                  <input id="delivery-date" name="delivery-date" type="date" required />
+                </div>
+
+                <div class="field-group">
+                  <label for="payment-method">Payment Method</label>
+                  <select id="payment-method" name="payment-method">
+                    <option>Cash on Delivery</option>
+                    <option>GCash</option>
+                    <option>Bank Transfer</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="notes">Order Notes</label>
+                <textarea id="notes" name="notes" placeholder="Optional instructions"></textarea>
+              </div>
+
+              <button class="submit-btn" type="submit">Place Order</button>
+            </form>
+
+            <!-- JavaScript reveals this confirmation after a valid submission. -->
+            <div class="status-box" id="order-status" aria-live="polite">
+              <span id="order-success-message">Your Food Express order has been received. Our team will contact you shortly to confirm delivery details.</span>
+            </div>
+          </div>
+
+          <!-- Static details shown beside the order form. -->
+          <aside class="order-info">
+            <div class="info-box">
+              <h3 id="service-info-title">Why choose Food Express?</h3>
+              <p id="service-info-description">Fast delivery, reliable service, and fresh essentials delivered straight to your door.</p>
+            </div>
+
+            <div class="info-box">
+              <h3>Service Area</h3>
+              <p>Cainta, Rizal and nearby communities.</p>
+            </div>
+
+            <div class="info-box">
+              <h3>Contact</h3>
+              <p>Phone: 09566753142</p>
+              <p>Email: cainta1express@gmail.com</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Read the requested service from the URL; default to Food Express.
+      const params = new URLSearchParams(window.location.search);
+      const requestedService = params.get('service');
+      const service = requestedService === 'Online Bazaar' ? 'Online Bazaar' : 'Food Express';
+      const isBazaar = service === 'Online Bazaar';
+      // Send older Bazaar query links to the dedicated size-aware clothing catalog.
+      if (isBazaar) window.location.replace('online-bazaar.html');
+      const foodMenu = document.getElementById('food-menu');
+      const menuIntro = document.getElementById('menu-intro');
+      const bazaarOrder = document.getElementById('bazaar-order');
+      foodMenu.hidden = isBazaar;
+      menuIntro.hidden = isBazaar;
+      bazaarOrder.hidden = !isBazaar;
+
+      // Update page labels so this form can serve both Food Express and Online Bazaar.
+      document.title = isBazaar ? `${service} Orders` : 'Food Express Menu';
+      document.getElementById('order-title').textContent = `${service} Order`;
+      document.getElementById('order-description').textContent = isBazaar
+        ? 'Shop apparel, accessories, and everyday finds with convenient local delivery.'
+        : 'Fresh food, daily essentials, and fast local delivery for your home or business.';
+      document.getElementById('service-info-title').textContent = `Why choose ${service}?`;
+      document.getElementById('service-info-description').textContent = isBazaar
+        ? 'Browse clothing, accessories, and retail essentials delivered straight to your door.'
+        : 'Fast delivery, reliable service, and fresh essentials delivered straight to your door.';
+      document.getElementById('order-success-message').textContent = `Your ${service} order has been received. Our team will contact you shortly to confirm delivery details.`;
+
+      // Prefill the product field when a service was chosen from the previous page.
+      const orderItems = document.getElementById('order-items');
+      if (orderItems && requestedService) {
+        orderItems.value = service;
+      }
+      if (orderItems && isBazaar) {
+        orderItems.placeholder = 'e.g. Shirt, shoes, accessories';
+      }
+
+      const form = document.getElementById('food-order-form');
+      const statusBox = document.getElementById('order-status');
+      if (form) {
+        // Keep the legacy form harmless while older Bazaar links redirect to the catalog.
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          statusBox.classList.add('show');
+          form.reset();
+          const today = new Date();
+          const dateInput = document.getElementById('delivery-date');
+          if (dateInput) dateInput.value = '';
+        });
+      }
+
+      if (!isBazaar) {
+        // Product IDs and prices mirror the server catalog; the server recalculates every submitted total.
+        const products = [
+          { id: 'crispy-chicken', name: 'Crispy Chicken Meal', category: 'Meals', description: 'Golden fried chicken served with rice and gravy.', price: 149, image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=640&q=80' },
+          { id: 'chicken-inasal', name: 'Chicken Inasal Plate', category: 'Meals', description: 'Grilled chicken, garlic rice, and a bright calamansi dip.', price: 159, image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=640&q=80' },
+          { id: 'sisig-bowl', name: 'Sisig Rice Bowl', category: 'Meals', description: 'Sizzling-style seasoned pork over steamed rice.', price: 159, image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=640&q=80' },
+          { id: 'beef-tapa', name: 'Beef Tapa Silog', category: 'Meals', description: 'Savory beef tapa with garlic rice and egg.', price: 169, image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=640&q=80' },
+          { id: 'pork-adobo', name: 'Pork Adobo Rice Meal', category: 'Meals', description: 'Savory pork adobo served with steamed rice.', price: 149, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=640&q=80' },
+          { id: 'chicken-bbq-meal', name: 'Chicken BBQ Meal', category: 'Meals', description: 'Sweet grilled chicken served with rice and atchara.', price: 159, image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=640&q=80' },
+          { id: 'pancit-canton', name: 'Pancit Canton', category: 'Meals', description: 'Stir-fried noodles with vegetables and savory sauce.', price: 129, image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=640&q=80' },
+          { id: 'kamote-fries', name: 'Kamote Fries', category: 'Sides', description: 'Crispy sweet potato fries with a pinch of seasoning.', price: 59, image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=640&q=80' },
+          { id: 'garlic-rice', name: 'Garlic Rice', category: 'Sides', description: 'A warm serving of rice tossed with toasted garlic.', price: 39, image: 'https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=640&q=80' },
+          { id: 'lumpia', name: 'Lumpia Shanghai', category: 'Snacks', description: 'Six crisp bites with a sweet dipping sauce.', price: 79, image: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=640&q=80' },
+          { id: 'kwek-kwek', name: 'Kwek-Kwek', category: 'Snacks', description: 'Quail eggs in a crisp orange batter with spiced vinegar.', price: 69, image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=640&q=80' },
+          { id: 'turon', name: 'Banana Turon', category: 'Snacks', description: 'Two caramelized banana rolls with a crisp wrapper.', price: 59, image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=640&q=80' },
+          { id: 'halo-halo', name: 'Halo-Halo', category: 'Desserts', description: 'A cool, colorful dessert finished with creamy leche flan.', price: 99, image: 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=640&q=80' },
+          { id: 'leche-flan', name: 'Leche Flan', category: 'Desserts', description: 'A smooth caramel custard, chilled and ready to enjoy.', price: 69, image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=640&q=80' },
+          { id: 'iced-calamansi', name: 'Iced Calamansi', category: 'Drinks', description: 'Bright citrus refreshment served over ice.', price: 49, image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=640&q=80' },
+          { id: 'mango-shake', name: 'Mango Shake', category: 'Drinks', description: 'A cool, creamy mango drink blended to order.', price: 79, image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=640&q=80' },
+          { id: 'jollibee-chickenjoy', restaurant: 'Jollibee', name: 'Chickenjoy 1-Pc Meal', category: 'Meals', description: 'Crispy fried chicken served with rice.', price: 139, image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?auto=format&fit=crop&w=640&q=80' },
+          { id: 'jollibee-spaghetti', restaurant: 'Jollibee', name: 'Jolly Spaghetti', category: 'Meals', description: 'Filipino-style sweet spaghetti with a savory meat sauce.', price: 89, image: 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=640&q=80' },
+          { id: 'jollibee-yumburger', restaurant: 'Jollibee', name: 'Yumburger', category: 'Meals', description: 'A seasoned beef patty in a soft bun with signature dressing.', price: 69, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=640&q=80' },
+          { id: 'jollibee-peach-mango-pie', restaurant: 'Jollibee', name: 'Peach Mango Pie', category: 'Desserts', description: 'A crisp pastry filled with sweet peach and mango.', price: 49, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=640&q=80' },
+          { id: 'mcdo-chicken-meal', restaurant: 'McDo', name: '1-Pc Chicken McDo Meal', category: 'Meals', description: 'Crispy fried chicken served with rice.', price: 139, image: 'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=640&q=80' },
+          { id: 'mcdo-big-mac', restaurant: 'McDo', name: 'Big Mac', category: 'Meals', description: 'Two beef patties with lettuce, cheese, pickles, and sesame bun.', price: 199, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=640&q=80' },
+          { id: 'mcdo-mcspaghetti', restaurant: 'McDo', name: 'McSpaghetti', category: 'Meals', description: 'Spaghetti with sweet-style sauce and savory toppings.', price: 89, image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=640&q=80' },
+          { id: 'mcdo-apple-pie', restaurant: 'McDo', name: 'Apple Pie', category: 'Desserts', description: 'A warm, crisp pastry with a spiced apple filling.', price: 49, image: 'https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=640&q=80' }
+        ];
+        const foodGrid = document.getElementById('food-grid');
+        const categoryTabs = document.getElementById('category-tabs');
+        const restaurantTabs = document.getElementById('restaurant-tabs');
+        const searchInput = document.getElementById('menu-search');
+        const cartLines = document.getElementById('cart-lines');
+        const cartEmpty = document.getElementById('cart-empty');
+        const cartCount = document.getElementById('cart-count');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const checkoutTotal = document.getElementById('checkout-total');
+        const checkoutForm = document.getElementById('menu-checkout');
+        const placeOrderButton = document.getElementById('place-order-button');
+        const orderStatus = document.getElementById('menu-order-status');
+        const cart = new Map();
+        let activeCategory = 'All';
+        let activeRestaurant = 'All';
+        const formatPrice = (amount) => `₱${amount.toLocaleString('en-PH')}`;
+
+        // Build the menu from product data so search and category filters stay in sync.
+        const renderMenu = () => {
+          const query = searchInput.value.trim().toLowerCase();
+          const visibleProducts = products.filter((product) => {
+            const matchesCategory = activeCategory === 'All' || product.category === activeCategory;
+            const matchesRestaurant = activeRestaurant === 'All' || (product.restaurant || 'Food Express') === activeRestaurant;
+            const matchesSearch = `${product.restaurant || 'Food Express'} ${product.name} ${product.description}`.toLowerCase().includes(query);
+            return matchesCategory && matchesRestaurant && matchesSearch;
+          });
+
+          foodGrid.innerHTML = visibleProducts.length
+            ? visibleProducts.map((product) => `
+                <article class="food-card">
+                  <img src="${product.image}" alt="${product.name}" loading="lazy" />
+                  <div class="food-card-content">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <div class="food-card-bottom">
+                      <span class="food-price">${formatPrice(product.price)}</span>
+                      <button class="add-food-button" type="button" data-add-product="${product.id}" aria-label="Add ${product.name} to order">Add</button>
+                    </div>
+                  </div>
+                </article>`).join('')
+            : '<p class="empty-menu">No menu items match your search.</p>';
+        };
+
+        // Keep item counts, line totals, and the checkout button updated after each change.
+        const renderCart = () => {
+          const selectedProducts = products.filter((product) => cart.has(product.id));
+          const itemCount = [...cart.values()].reduce((sum, quantity) => sum + quantity, 0);
+          const subtotal = selectedProducts.reduce((sum, product) => sum + product.price * cart.get(product.id), 0);
+          cartCount.textContent = itemCount;
+          cartEmpty.hidden = itemCount > 0;
+          cartLines.innerHTML = selectedProducts.map((product) => `
+            <div class="cart-line">
+              <div>
+                <h3>${product.name}</h3>
+                <p>${formatPrice(product.price * cart.get(product.id))}</p>
+              </div>
+              <div class="quantity-control" aria-label="Quantity for ${product.name}">
+                <button type="button" data-cart-change="-1" data-product-id="${product.id}" aria-label="Remove one ${product.name}">−</button>
+                <span>${cart.get(product.id)}</span>
+                <button type="button" data-cart-change="1" data-product-id="${product.id}" aria-label="Add one ${product.name}">+</button>
+              </div>
+            </div>`).join('');
+          cartSubtotal.textContent = formatPrice(subtotal);
+          checkoutTotal.textContent = formatPrice(subtotal);
+          placeOrderButton.disabled = itemCount === 0;
+        };
+
+        categoryTabs.addEventListener('click', (event) => {
+          const button = event.target.closest('[data-category]');
+          if (!button) return;
+          activeCategory = button.dataset.category;
+          categoryTabs.querySelectorAll('[data-category]').forEach((tab) => {
+            tab.setAttribute('aria-pressed', String(tab === button));
+          });
+          renderMenu();
+        });
+
+        restaurantTabs.addEventListener('click', (event) => {
+          const button = event.target.closest('[data-restaurant]');
+          if (!button) return;
+          activeRestaurant = button.dataset.restaurant;
+          restaurantTabs.querySelectorAll('[data-restaurant]').forEach((tab) => {
+            tab.setAttribute('aria-pressed', String(tab === button));
+          });
+          renderMenu();
+        });
+
+        searchInput.addEventListener('input', renderMenu);
+
+        foodGrid.addEventListener('click', (event) => {
+          const button = event.target.closest('[data-add-product]');
+          if (!button) return;
+          const productId = button.dataset.addProduct;
+          cart.set(productId, (cart.get(productId) || 0) + 1);
+          orderStatus.hidden = true;
+          renderCart();
+        });
+
+        cartLines.addEventListener('click', (event) => {
+          const button = event.target.closest('[data-cart-change]');
+          if (!button) return;
+          const productId = button.dataset.productId;
+          const nextQuantity = (cart.get(productId) || 0) + Number(button.dataset.cartChange);
+          if (nextQuantity > 0) cart.set(productId, nextQuantity);
+          else cart.delete(productId);
+          renderCart();
+        });
+
+        // Submit the cart and delivery details to the backend, then show its receipt or validation error.
+        checkoutForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          if (cart.size === 0) return;
+
+          placeOrderButton.disabled = true;
+          orderStatus.classList.remove('is-error');
+          orderStatus.textContent = 'Saving your order request...';
+          orderStatus.hidden = false;
+          try {
+            const response = await fetch('/api/orders', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                service: 'food-express',
+                customer_name: document.getElementById('menu-customer-name').value.trim(),
+                phone: document.getElementById('menu-phone-number').value.trim(),
+                address: document.getElementById('menu-delivery-address').value.trim(),
+                delivery_date: document.getElementById('menu-delivery-date').value,
+                payment_method: document.getElementById('menu-payment-method').value,
+                items: [...cart.entries()].map(([id, quantity]) => ({ id, quantity }))
+              })
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Could not save your order.');
+
+            orderStatus.textContent = `Order request ${result.order_id} was saved. Total: ${formatPrice(result.total)}. Our team will contact you to confirm.`;
+            cart.clear();
+          } catch (error) {
+            orderStatus.textContent = error.message || 'Could not save your order. Please try again.';
+            orderStatus.classList.add('is-error');
+          }
+          orderStatus.hidden = false;
+          renderCart();
+        });
+
+        const deliveryDate = document.getElementById('menu-delivery-date');
+        const localToday = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+        deliveryDate.min = localToday;
+        deliveryDate.value = localToday;
+        renderMenu();
+        renderCart();
+      }
+    </script>
+  </body>
+</html>

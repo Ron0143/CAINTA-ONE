@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Online Bazaar | Cainta One Express</title>
+		<meta name="description" content="Browse curated fashion and footwear selections from popular brands." />
+		<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+		<link rel="stylesheet" href="style.css" />
+		<script src="script.js" defer></script>
+		<style>
+			/* Page frame, introduction, and marketplace disclosure. */
+			body {
+				background: #f5f6f2;
+				color: #20221f;
+			}
+
+			.bazaar-page {
+				width: min(1280px, calc(100% - 40px));
+				margin: 0 auto;
+				padding: 42px 0 80px;
+			}
+
+			.bazaar-intro {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) minmax(230px, 360px);
+				align-items: end;
+				gap: 30px;
+				margin-bottom: 30px;
+			}
+
+			.bazaar-kicker {
+				color: #44553a;
+				font-size: 0.76rem;
+				font-weight: 800;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+			}
+
+			.bazaar-intro h1 {
+				margin: 8px 0 10px;
+				color: #191c19;
+				font-size: 2.6rem;
+				line-height: 1.08;
+				letter-spacing: 0;
+			}
+
+			.bazaar-intro-copy {
+				max-width: 670px;
+				color: #626a61;
+			}
+
+			.bazaar-disclaimer {
+				border-left: 3px solid #c2dd6d;
+				padding: 8px 0 8px 14px;
+				color: #626a61;
+				font-size: 0.82rem;
+				line-height: 1.5;
+			}
+
+			.bazaar-layout {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) 330px;
+				align-items: start;
+				gap: 28px;
+			}
+
+			/* Search and sorting controls sit above the product filters. */
+			.catalog-tools {
+				display: flex;
+				align-items: end;
+				justify-content: space-between;
+				gap: 16px;
+				margin-bottom: 16px;
+			}
+
+			.catalog-tools h2 {
+				margin-top: 4px;
+				color: #191c19;
+				font-size: 1.5rem;
+			}
+
+			.catalog-controls {
+				display: flex;
+				align-items: end;
+				gap: 10px;
+			}
+
+			.catalog-controls label {
+				display: grid;
+				gap: 5px;
+				color: #626a61;
+				font-size: 0.78rem;
+				font-weight: 700;
+			}
+
+			.catalog-controls input,
+			.catalog-controls select,
+			.checkout-form input,
+			.checkout-form select,
+			.checkout-form textarea,
+			.size-select {
+				min-width: 0;
+				min-height: 42px;
+				border: 1px solid #d9ded6;
+				border-radius: 6px;
+				background: #fff;
+				padding: 9px 11px;
+				color: #20221f;
+				font: inherit;
+			}
+
+			.catalog-controls input {
+				width: 220px;
+			}
+
+			.catalog-controls select {
+				width: 150px;
+			}
+
+			.catalog-controls input:focus,
+			.catalog-controls select:focus,
+			.checkout-form input:focus,
+			.checkout-form select:focus,
+			.checkout-form textarea:focus,
+			.size-select:focus {
+				outline: 3px solid rgba(116, 143, 62, 0.18);
+				border-color: #748f3e;
+			}
+
+			/* Brand and category filters share the same swipeable button treatment. */
+			.filter-group {
+				margin-bottom: 15px;
+			}
+
+			.filter-label {
+				margin-bottom: 7px;
+				color: #626a61;
+				font-size: 0.74rem;
+				font-weight: 800;
+				letter-spacing: 0.07em;
+				text-transform: uppercase;
+			}
+
+			.filter-tabs {
+				display: flex;
+				gap: 7px;
+				overflow-x: auto;
+				padding: 1px 0 5px;
+				scrollbar-width: none;
+			}
+
+			.filter-tabs::-webkit-scrollbar {
+				display: none;
+			}
+
+			.filter-tabs button {
+				flex: 0 0 auto;
+				min-height: 36px;
+				border: 1px solid #d9ded6;
+				border-radius: 999px;
+				background: #fff;
+				color: #3e463c;
+				padding: 0 13px;
+				font: inherit;
+				font-size: 0.82rem;
+				font-weight: 700;
+				cursor: pointer;
+			}
+
+			.filter-tabs button[aria-pressed="true"] {
+				border-color: #20221f;
+				background: #20221f;
+				color: #fff;
+			}
+
+			/* Product cards keep imagery, item details, size selection, and add action together. */
+			.product-grid {
+				display: grid;
+				grid-template-columns: repeat(4, minmax(0, 1fr));
+				gap: 16px 12px;
+			}
+
+			.product-card {
+				min-width: 0;
+				overflow: hidden;
+				border: 1px solid #e0e4dc;
+				border-radius: 7px;
+				background: #fff;
+			}
+
+			.product-card img {
+				width: 100%;
+				aspect-ratio: 4 / 5;
+				object-fit: cover;
+				background: #e9ece5;
+			}
+
+			.product-card-content {
+				display: grid;
+				gap: 7px;
+				padding: 12px;
+			}
+
+			.product-brand {
+				color: #667254;
+				font-size: 0.7rem;
+				font-weight: 800;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+			}
+
+			.product-card h3 {
+				min-height: 40px;
+				color: #20221f;
+				font-size: 0.95rem;
+				line-height: 1.35;
+			}
+
+			.product-description {
+				min-height: 36px;
+				color: #687067;
+				font-size: 0.78rem;
+				line-height: 1.45;
+			}
+
+			.product-options {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) auto;
+				align-items: end;
+				gap: 7px;
+			}
+
+			.product-options label {
+				display: grid;
+				gap: 4px;
+				color: #687067;
+				font-size: 0.7rem;
+				font-weight: 700;
+			}
+
+			.size-select {
+				width: 100%;
+				min-height: 36px;
+				padding: 6px 8px;
+				font-size: 0.8rem;
+			}
+
+			.product-price {
+				display: block;
+				margin: 1px 0;
+				color: #20221f;
+				font-size: 0.95rem;
+				font-weight: 800;
+			}
+
+			.add-to-cart {
+				min-height: 36px;
+				border: 0;
+				border-radius: 5px;
+				background: #c2dd6d;
+				color: #1e2714;
+				padding: 0 11px;
+				font: inherit;
+				font-size: 0.78rem;
+				font-weight: 800;
+				cursor: pointer;
+			}
+
+			.add-to-cart:hover {
+				background: #b3d151;
+			}
+
+			.empty-results {
+				grid-column: 1 / -1;
+				padding: 25px 0;
+				color: #626a61;
+			}
+
+			/* The cart remains visible beside the catalog on wide screens. */
+			.cart-panel {
+				position: sticky;
+				top: 96px;
+				min-width: 0;
+				border: 1px solid #dfe3dc;
+				border-radius: 7px;
+				background: #fff;
+				padding: 17px;
+			}
+
+			.cart-heading {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-bottom: 12px;
+				border-bottom: 1px solid #e6e9e3;
+			}
+
+			.cart-heading h2 {
+				margin-top: 3px;
+				color: #20221f;
+				font-size: 1.2rem;
+			}
+
+			.cart-count {
+				display: inline-grid;
+				place-items: center;
+				min-width: 23px;
+				height: 23px;
+				border-radius: 50%;
+				background: #c2dd6d;
+				font-size: 0.74rem;
+				vertical-align: 2px;
+			}
+
+			.cart-empty {
+				padding: 16px 0;
+				color: #687067;
+				font-size: 0.86rem;
+			}
+
+			.cart-lines {
+				display: grid;
+				gap: 12px;
+				max-height: 250px;
+				overflow-y: auto;
+				padding: 13px 0;
+			}
+
+			.cart-line {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) auto;
+				gap: 8px;
+				align-items: center;
+			}
+
+			.cart-line h3 {
+				color: #20221f;
+				font-size: 0.83rem;
+			}
+
+			.cart-line p {
+				margin-top: 2px;
+				color: #687067;
+				font-size: 0.75rem;
+			}
+
+			.quantity-control {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+			}
+
+			.quantity-control button {
+				width: 27px;
+				height: 27px;
+				border: 1px solid #d9ded6;
+				border-radius: 50%;
+				background: #fff;
+				color: #20221f;
+				font: inherit;
+				font-weight: 800;
+				cursor: pointer;
+			}
+
+			.quantity-control span {
+				min-width: 13px;
+				text-align: center;
+				font-size: 0.82rem;
+				font-weight: 700;
+			}
+
+			.cart-total {
+				display: flex;
+				justify-content: space-between;
+				padding: 12px 0;
+				border-top: 1px solid #e6e9e3;
+				color: #20221f;
+				font-weight: 800;
+			}
+
+			/* Delivery details and order status are part of the cart workflow. */
+			.checkout-form {
+				display: grid;
+				gap: 9px;
+			}
+
+			.checkout-form h3 {
+				margin: 2px 0;
+				color: #20221f;
+				font-size: 0.98rem;
+			}
+
+			.checkout-form label {
+				display: grid;
+				min-width: 0;
+				gap: 4px;
+				color: #626a61;
+				font-size: 0.75rem;
+				font-weight: 700;
+			}
+
+			.checkout-form input,
+			.checkout-form select,
+			.checkout-form textarea {
+				width: 100%;
+			}
+
+			.checkout-form textarea {
+				min-height: 64px;
+				resize: vertical;
+			}
+
+			.checkout-row {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 8px;
+			}
+
+			.place-order {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				min-height: 46px;
+				margin-top: 3px;
+				border: 0;
+				border-radius: 5px;
+				background: #20221f;
+				color: #fff;
+				padding: 0 13px;
+				font: inherit;
+				font-weight: 800;
+				cursor: pointer;
+			}
+
+			.place-order:disabled {
+				background: #aeb3a9;
+				cursor: not-allowed;
+			}
+
+			.order-status {
+				margin-top: 12px;
+				border-radius: 5px;
+				background: #eef5df;
+				color: #344321;
+				padding: 11px;
+				font-size: 0.82rem;
+			}
+
+			.order-status.is-error {
+				background: #fff0ec;
+				color: #92392e;
+			}
+
+			[hidden] {
+				display: none !important;
+			}
+
+			/* Reduce columns as the viewport narrows; stack the cart on mobile. */
+			@media (max-width: 1050px) {
+				.bazaar-layout {
+					grid-template-columns: minmax(0, 1fr) 300px;
+					gap: 18px;
+				}
+
+				.product-grid {
+					grid-template-columns: repeat(3, minmax(0, 1fr));
+				}
+			}
+
+			@media (max-width: 760px) {
+				.bazaar-page {
+					width: min(100% - 28px, 620px);
+					padding-top: 28px;
+				}
+
+				.bazaar-intro {
+					grid-template-columns: 1fr;
+					gap: 14px;
+				}
+
+				.bazaar-intro h1 {
+					font-size: 2.1rem;
+				}
+
+				.bazaar-layout {
+					grid-template-columns: minmax(0, 1fr);
+				}
+
+				.cart-panel {
+					position: static;
+				}
+			}
+
+			@media (max-width: 560px) {
+				.nav .logo {
+					flex-shrink: 0;
+				}
+
+				.nav .logo > span:last-child,
+				.nav .nav-cta {
+					white-space: nowrap;
+				}
+
+				.nav .nav-cta {
+					padding: 10px 12px;
+					font-size: 0.84rem;
+				}
+
+				.catalog-tools {
+					align-items: stretch;
+					flex-direction: column;
+				}
+
+				.catalog-controls {
+					align-items: stretch;
+					flex-direction: column;
+				}
+
+				.catalog-controls input,
+				.catalog-controls select {
+					width: 100%;
+				}
+
+				.product-grid {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+					gap: 10px;
+				}
+
+				.product-card-content {
+					padding: 9px;
+				}
+
+				.product-options {
+					grid-template-columns: 1fr;
+				}
+
+				.add-to-cart {
+					width: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Shared navigation links the shop back to the rest of the site. -->
+		<header>
+			<div class="container nav">
+				<a href="main.html#home" class="logo" aria-label="Cainta One Express home">
+					<span class="logo-mark" aria-hidden="true">
+						<img src="favicon.svg" alt="" width="46" height="46" />
+					</span>
+					<span>Cainta One Express</span>
+				</a>
+				<nav class="nav-menu" aria-label="Main navigation">
+					<a href="main.html#home">Home</a>
+					<a href="food-express.html">Food Express</a>
+					<a href="account.html">Account</a>
+				</nav>
+				<a href="#shopping-cart" class="nav-cta">Cart <span id="header-cart-count">0</span></a>
+			</div>
+		</header>
+
+		<!-- Introductory copy and sample-price notice keep the catalog's scope clear. -->
+		<main class="bazaar-page">
+			<section class="bazaar-intro">
+				<div>
+					<p class="bazaar-kicker">Online Bazaar / Clothing & footwear</p>
+					<h1>Everyday style, from brands you know.</h1>
+					<p class="bazaar-intro-copy">Browse a curated selection of popular apparel and footwear, then choose a size and build your delivery order.</p>
+				</div>
+				<p class="bazaar-disclaimer">Sample listings only. Prices and availability are estimates; product photos are illustrative. Brand names belong to their respective owners. This demo is not affiliated with or connected to those brands.</p>
+			</section>
+
+			<div class="bazaar-layout">
+				<!-- Search, brand/category filters, and product cards make up the catalog. -->
+				<section aria-label="Branded clothing products">
+					<div class="catalog-tools">
+						<div>
+							<p class="bazaar-kicker">Curated brand edit</p>
+							<h2>Shop the collection</h2>
+						</div>
+						<div class="catalog-controls">
+							<label for="product-search">Search products
+								<input id="product-search" type="search" placeholder="Search brand or item" />
+							</label>
+							<label for="product-sort">Sort by
+								<select id="product-sort">
+									<option value="featured">Featured</option>
+									<option value="price-low">Price: low to high</option>
+									<option value="price-high">Price: high to low</option>
+								</select>
+							</label>
+						</div>
+					</div>
+
+					<!-- Brand and category filters can be combined. -->
+					<div class="filter-group">
+						<p class="filter-label">Brand</p>
+						<div class="filter-tabs" id="brand-filters" role="group" aria-label="Filter products by brand">
+							<button type="button" data-brand="All" aria-pressed="true">All brands</button>
+							<button type="button" data-brand="Nike" aria-pressed="false">Nike</button>
+							<button type="button" data-brand="Adidas" aria-pressed="false">Adidas</button>
+							<button type="button" data-brand="Puma" aria-pressed="false">Puma</button>
+							<button type="button" data-brand="Levi's" aria-pressed="false">Levi's</button>
+							<button type="button" data-brand="Uniqlo" aria-pressed="false">Uniqlo</button>
+							<button type="button" data-brand="Zara" aria-pressed="false">Zara</button>
+							<button type="button" data-brand="Converse" aria-pressed="false">Converse</button>
+							<button type="button" data-brand="New Balance" aria-pressed="false">New Balance</button>
+						</div>
+					</div>
+
+					<div class="filter-group">
+						<p class="filter-label">Category</p>
+						<div class="filter-tabs" id="category-filters" role="group" aria-label="Filter products by category">
+							<button type="button" data-category="All" aria-pressed="true">All</button>
+							<button type="button" data-category="Tops" aria-pressed="false">Tops</button>
+							<button type="button" data-category="Bottoms" aria-pressed="false">Bottoms</button>
+							<button type="button" data-category="Outerwear" aria-pressed="false">Outerwear</button>
+							<button type="button" data-category="Footwear" aria-pressed="false">Footwear</button>
+						</div>
+					</div>
+
+					<div class="product-grid" id="product-grid" aria-live="polite"></div>
+				</section>
+
+				<!-- Size-aware cart and delivery form for preparing an order request. -->
+				<aside class="cart-panel" id="shopping-cart" aria-label="Shopping cart">
+					<div class="cart-heading">
+						<div>
+							<p class="bazaar-kicker">Your selection</p>
+							<h2>Shopping bag <span class="cart-count" id="cart-count">0</span></h2>
+						</div>
+					</div>
+					<p class="cart-empty" id="cart-empty">Your bag is empty. Add an item to get started.</p>
+					<div class="cart-lines" id="cart-lines" aria-live="polite"></div>
+					<div class="cart-total"><span>Subtotal</span><strong id="cart-subtotal">₱0</strong></div>
+
+					<form class="checkout-form" id="bazaar-checkout">
+						<h3>Delivery details</h3>
+						<div class="checkout-row">
+							<label for="buyer-name">Name
+								<input id="buyer-name" autocomplete="name" required />
+							</label>
+							<label for="buyer-phone">Phone
+								<input id="buyer-phone" type="tel" autocomplete="tel" required />
+							</label>
+						</div>
+						<label for="buyer-address">Delivery address
+							<textarea id="buyer-address" placeholder="House number, street, barangay" required></textarea>
+						</label>
+						<div class="checkout-row">
+							<label for="delivery-date">Delivery date
+								<input id="delivery-date" type="date" required />
+							</label>
+							<label for="payment-method">Payment
+								<select id="payment-method">
+									<option>Cash on Delivery</option>
+									<option>GCash</option>
+									<option>Bank Transfer</option>
+								</select>
+							</label>
+						</div>
+						<button class="place-order" id="place-order" type="submit" disabled>
+							<span>Prepare order</span><span id="checkout-total">₱0</span>
+						</button>
+					</form>
+					<p class="order-status" id="order-status" role="status" aria-live="polite" hidden></p>
+				</aside>
+			</div>
+		</main>
+
+		<script>
+			// Catalog records drive product cards; the server independently checks IDs and prices.
+			const products = [
+				{ id: 'nike-dri-fit-tee', brand: 'Nike', name: 'Dri-FIT Training T-Shirt', category: 'Tops', description: 'Lightweight training tee with moisture-wicking fabric.', price: 1895, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'nike-air-max', brand: 'Nike', name: 'Air Max Lifestyle Shoes', category: 'Footwear', description: 'Everyday sneakers with cushioned support.', price: 6995, sizes: ['36', '37', '38', '39', '40', '41', '42', '43'], image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'adidas-tee', brand: 'Adidas', name: '3-Stripes Essentials Tee', category: 'Tops', description: 'Soft cotton tee with a clean athletic finish.', price: 1700, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'adidas-superstar', brand: 'Adidas', name: 'Superstar Shoes', category: 'Footwear', description: 'Classic low-top sneakers for daily wear.', price: 5800, sizes: ['36', '37', '38', '39', '40', '41', '42', '43'], image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'puma-hoodie', brand: 'Puma', name: 'Essentials Pullover Hoodie', category: 'Outerwear', description: 'A relaxed fleece layer for cooler days.', price: 2600, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'puma-suede', brand: 'Puma', name: 'Suede Classic Sneakers', category: 'Footwear', description: 'Low-profile suede sneakers with a timeless shape.', price: 4700, sizes: ['36', '37', '38', '39', '40', '41', '42'], image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'levis-501', brand: "Levi's", name: '501 Original Jeans', category: 'Bottoms', description: 'Straight-leg denim with a classic button fly.', price: 5500, sizes: ['28', '30', '32', '34', '36'], image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'levis-graphic-tee', brand: "Levi's", name: 'Graphic Cotton Tee', category: 'Tops', description: 'Everyday cotton tee with a relaxed fit.', price: 1400, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'uniqlo-airism', brand: 'Uniqlo', name: 'AIRism Cotton T-Shirt', category: 'Tops', description: 'Smooth, breathable tee for comfortable daily layering.', price: 790, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'uniqlo-ultra-light-down', brand: 'Uniqlo', name: 'Ultra Light Down Jacket', category: 'Outerwear', description: 'Packable lightweight jacket for travel and layering.', price: 3990, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'zara-poplin-shirt', brand: 'Zara', name: 'Oversized Poplin Shirt', category: 'Tops', description: 'Crisp button-up shirt with an easy oversized fit.', price: 2295, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'zara-straight-jeans', brand: 'Zara', name: 'Straight-Fit Jeans', category: 'Bottoms', description: 'Versatile straight-leg denim for everyday outfits.', price: 2995, sizes: ['28', '30', '32', '34', '36'], image: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'converse-chuck-taylor', brand: 'Converse', name: 'Chuck Taylor All Star', category: 'Footwear', description: 'Canvas high-tops with a familiar everyday profile.', price: 3590, sizes: ['36', '37', '38', '39', '40', '41', '42', '43'], image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'converse-chuck-70', brand: 'Converse', name: 'Chuck 70 Canvas High-Top', category: 'Footwear', description: 'A sturdy canvas sneaker with a vintage-inspired shape.', price: 4990, sizes: ['36', '37', '38', '39', '40', '41', '42', '43'], image: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'new-balance-574', brand: 'New Balance', name: '574 Core Sneakers', category: 'Footwear', description: 'Versatile everyday sneakers with cushioned comfort.', price: 5795, sizes: ['36', '37', '38', '39', '40', '41', '42', '43'], image: 'https://images.unsplash.com/photo-1490114538077-0a7f8cb49891?auto=format&fit=crop&w=640&q=80' },
+				{ id: 'new-balance-sweatshirt', brand: 'New Balance', name: 'Essentials Crew Sweatshirt', category: 'Outerwear', description: 'A soft crewneck layer with a relaxed everyday fit.', price: 3295, sizes: ['S', 'M', 'L', 'XL'], image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=640&q=80' }
+			];
+
+			// Cache page controls and hold the active filters and selected cart lines.
+			const productGrid = document.getElementById('product-grid');
+			const brandFilters = document.getElementById('brand-filters');
+			const categoryFilters = document.getElementById('category-filters');
+			const searchInput = document.getElementById('product-search');
+			const sortSelect = document.getElementById('product-sort');
+			const cartItems = new Map();
+			let activeBrand = 'All';
+			let activeCategory = 'All';
+
+			const formatPrice = (amount) => `₱${amount.toLocaleString('en-PH')}`;
+
+			// Filter and sort the catalog, then rebuild the matching product cards.
+			const renderProducts = () => {
+				const searchTerm = searchInput.value.trim().toLowerCase();
+				let visibleProducts = products.filter((product) => {
+					const matchesBrand = activeBrand === 'All' || product.brand === activeBrand;
+					const matchesCategory = activeCategory === 'All' || product.category === activeCategory;
+					const searchableText = `${product.brand} ${product.name} ${product.description}`.toLowerCase();
+					return matchesBrand && matchesCategory && searchableText.includes(searchTerm);
+				});
+
+				if (sortSelect.value === 'price-low') visibleProducts = visibleProducts.toSorted((a, b) => a.price - b.price);
+				if (sortSelect.value === 'price-high') visibleProducts = visibleProducts.toSorted((a, b) => b.price - a.price);
+
+				productGrid.innerHTML = visibleProducts.length
+					? visibleProducts.map((product) => `
+							<article class="product-card">
+								<img src="${product.image}" alt="${product.brand} ${product.name}" loading="lazy" />
+								<div class="product-card-content">
+									<p class="product-brand">${product.brand}</p>
+									<h3>${product.name}</h3>
+									<p class="product-description">${product.description}</p>
+									<strong class="product-price">${formatPrice(product.price)}</strong>
+									<div class="product-options">
+										<label for="size-${product.id}">Size
+											<select class="size-select" id="size-${product.id}" data-size-for="${product.id}">
+												${product.sizes.map((size) => `<option value="${size}">${size}</option>`).join('')}
+											</select>
+										</label>
+										<button class="add-to-cart" type="button" data-add-product="${product.id}">Add</button>
+									</div>
+								</div>
+							</article>`).join('')
+					: '<p class="empty-results">No products match these filters.</p>';
+			};
+
+			// Recalculate quantities and totals whenever a size is added or removed.
+			const renderCart = () => {
+				const entries = [...cartItems.entries()];
+				const count = entries.reduce((sum, [, item]) => sum + item.quantity, 0);
+				const subtotal = entries.reduce((sum, [, item]) => sum + item.product.price * item.quantity, 0);
+				document.getElementById('cart-count').textContent = count;
+				document.getElementById('header-cart-count').textContent = count;
+				document.getElementById('cart-empty').hidden = count > 0;
+				document.getElementById('cart-lines').innerHTML = entries.map(([key, item]) => `
+					<div class="cart-line">
+						<div>
+							<h3>${item.product.brand} ${item.product.name}</h3>
+							<p>Size ${item.size} · ${formatPrice(item.product.price * item.quantity)}</p>
+						</div>
+						<div class="quantity-control" aria-label="Quantity for ${item.product.name}, size ${item.size}">
+							<button type="button" data-cart-change="-1" data-cart-key="${key}" aria-label="Remove one ${item.product.name}">−</button>
+							<span>${item.quantity}</span>
+							<button type="button" data-cart-change="1" data-cart-key="${key}" aria-label="Add one ${item.product.name}">+</button>
+						</div>
+					</div>`).join('');
+				document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
+				document.getElementById('checkout-total').textContent = formatPrice(subtotal);
+				document.getElementById('place-order').disabled = count === 0;
+			};
+
+			// Brand and category controls update independently and refresh the same catalog.
+			brandFilters.addEventListener('click', (event) => {
+				const button = event.target.closest('[data-brand]');
+				if (!button) return;
+				activeBrand = button.dataset.brand;
+				brandFilters.querySelectorAll('[data-brand]').forEach((filter) => {
+					filter.setAttribute('aria-pressed', String(filter === button));
+				});
+				renderProducts();
+			});
+
+			categoryFilters.addEventListener('click', (event) => {
+				const button = event.target.closest('[data-category]');
+				if (!button) return;
+				activeCategory = button.dataset.category;
+				categoryFilters.querySelectorAll('[data-category]').forEach((filter) => {
+					filter.setAttribute('aria-pressed', String(filter === button));
+				});
+				renderProducts();
+			});
+
+			searchInput.addEventListener('input', renderProducts);
+			sortSelect.addEventListener('change', renderProducts);
+
+			// Each product-size pair gets its own cart line.
+			productGrid.addEventListener('click', (event) => {
+				const button = event.target.closest('[data-add-product]');
+				if (!button) return;
+				const product = products.find((item) => item.id === button.dataset.addProduct);
+				const size = productGrid.querySelector(`[data-size-for="${product.id}"]`).value;
+				const key = `${product.id}|${size}`;
+				const item = cartItems.get(key) || { product, size, quantity: 0 };
+				item.quantity += 1;
+				cartItems.set(key, item);
+				renderCart();
+			});
+
+			document.getElementById('cart-lines').addEventListener('click', (event) => {
+				const button = event.target.closest('[data-cart-change]');
+				if (!button) return;
+				const key = button.dataset.cartKey;
+				const item = cartItems.get(key);
+				item.quantity += Number(button.dataset.cartChange);
+				if (item.quantity < 1) cartItems.delete(key);
+				else cartItems.set(key, item);
+				renderCart();
+			});
+
+			// Send customer details and item IDs to the server; it saves the request and calculates the total.
+			document.getElementById('bazaar-checkout').addEventListener('submit', async (event) => {
+				event.preventDefault();
+				const status = document.getElementById('order-status');
+				const submitButton = document.getElementById('place-order');
+				if (cartItems.size === 0) return;
+				submitButton.disabled = true;
+				status.classList.remove('is-error');
+				status.textContent = 'Saving your order request...';
+				status.hidden = false;
+				try {
+					const response = await fetch('/api/orders', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							service: 'online-bazaar',
+							customer_name: document.getElementById('buyer-name').value.trim(),
+							phone: document.getElementById('buyer-phone').value.trim(),
+							address: document.getElementById('buyer-address').value.trim(),
+							delivery_date: document.getElementById('delivery-date').value,
+							payment_method: document.getElementById('payment-method').value,
+							items: [...cartItems.values()].map((item) => ({
+								id: item.product.id,
+								size: item.size,
+								quantity: item.quantity
+							}))
+						})
+					});
+					const result = await response.json();
+					if (!response.ok) throw new Error(result.error || 'Could not save your order.');
+					status.textContent = `Order request ${result.order_id} was saved. Total: ${formatPrice(result.total)}. Our team will contact you to confirm.`;
+					cartItems.clear();
+				} catch (error) {
+					status.textContent = error.message || 'Could not save your order. Please try again.';
+					status.classList.add('is-error');
+				}
+				renderCart();
+			});
+
+			// Use the local calendar date so timezone conversion cannot set a past minimum.
+			const deliveryDate = document.getElementById('delivery-date');
+			const localToday = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+			deliveryDate.min = localToday;
+			deliveryDate.value = localToday;
+			renderProducts();
+			renderCart();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Document metadata and shared assets used throughout the site. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cainta One Express</title>
+    <meta
+      name="description"
+      content="Cainta One Express offers fast Food Delivery, Clothing Delivery, and Moving services in Cainta, Rizal."
+    />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <!-- Decorative background layers are hidden from assistive technology. -->
+    <!-- Live animated background (flat blue delivery theme) -->
+    <div class="bg-live" aria-hidden="true">
+      <div class="layer" data-speed="0.05" data-mouse="10">
+        <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+        <span class="dot d4"></span><span class="dot d5"></span><span class="dot d6"></span>
+      </div>
+
+      <!-- dashed delivery routes with flying paper planes -->
+      <div class="layer paths" data-speed="0.10" data-mouse="26">
+        <svg viewBox="0 0 1440 1000" preserveAspectRatio="xMidYMid slice">
+          <g class="route" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2" stroke-dasharray="8 10" stroke-linecap="round">
+            <path id="r1" d="M-40 220 C 200 40, 380 420, 640 200 S 1000 60, 1480 260"/>
+            <path id="r2" d="M1480 520 C 1200 380, 1000 700, 760 560 S 380 420, -40 640"/>
+            <path id="r3" d="M-40 860 C 260 700, 520 980, 860 820 S 1240 700, 1480 800"/>
+          </g>
+          <g fill="#f7a93b">
+            <path d="M0 0 L30 -9 L9 3 L14 16 Z"><animateMotion dur="16s" repeatCount="indefinite" rotate="auto"><mpath href="#r1"/></animateMotion></path>
+            <path d="M0 0 L26 -8 L8 2 L12 14 Z" fill="#ffd27a"><animateMotion dur="21s" begin="-6s" repeatCount="indefinite" rotate="auto"><mpath href="#r2"/></animateMotion></path>
+            <path d="M0 0 L30 -9 L9 3 L14 16 Z"><animateMotion dur="19s" begin="-11s" repeatCount="indefinite" rotate="auto"><mpath href="#r3"/></animateMotion></path>
+          </g>
+        </svg>
+      </div>
+
+      <!-- white line-art trees + rolling hills -->
+      <div class="layer trees" data-speed="0.03" data-mouse="14">
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <symbol id="tree" viewBox="-40 -130 80 130" overflow="visible">
+              <g fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="0" cy="-82" rx="27" ry="44"/>
+                <path d="M0 0V-38M0 -26L-12 -48M0 -40L12 -62"/>
+              </g>
+            </symbol>
+          </defs>
+          <path d="M0 300 C 180 250, 300 290, 480 292 S 760 250, 960 285 S 1280 250, 1440 280" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2"/>
+          <g class="sway">
+            <use href="#tree" x="90"   y="270" width="60" height="100"/>
+            <use href="#tree" x="170"  y="282" width="44" height="76"/>
+            <use href="#tree" x="610"  y="286" width="52" height="90"/>
+            <use href="#tree" x="1010" y="276" width="62" height="104"/>
+            <use href="#tree" x="1100" y="280" width="46" height="80"/>
+            <use href="#tree" x="1330" y="270" width="58" height="98"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <header>
+      <div class="container nav">
+        <a href="#home" class="logo" aria-label="Cainta One Express home">
+          <span class="logo-mark" aria-hidden="true">
+            <img src="favicon.svg" alt="" width="46" height="46" />
+          </span>
+          <span>Cainta One Express</span>
+        </a>
+
+        <nav class="nav-menu" aria-label="Main navigation">
+          <a href="#home">Home</a>
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#process">Process</a>
+        </nav>
+
+        <a href="account.html" class="nav-cta">Sign In</a>
+      </div>
+    </header>
+
+    <!-- Home page content is divided into linkable sections for the main menu. -->
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Reliable supply chain partner</span>
+            <h1>Smarter logistics for a faster-moving Cainta Rizal.</h1>
+            <p>
+              We help businesses streamline procurement, warehousing, freight operations,
+              and last-mile delivery with efficient, scalable, and dependable solutions.
+            </p>
+
+            <div class="hero-actions">
+              <a href="download-app.html" class="btn btn-primary">Download App</a>
+              <a href="#services" class="btn btn-secondary">Our Services</a>
+            </div>
+
+            <div class="hero-metrics">
+              <div class="metric">
+                <strong>67K+</strong>
+                <span>Shipments delivered</span>
+              </div>
+              <div class="metric">
+                <strong>96%</strong>
+                <span>On-time performance</span>
+              </div>
+              <div class="metric">
+                <strong>24/7</strong>
+                <span>Operations support</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Express delivery illustration">
+            <svg class="scene" viewBox="0 0 540 460" role="img" aria-label="Delivery truck, courier and app illustration">
+              <!-- tablet / app -->
+              <g class="tablet">
+                <rect x="268" y="14" width="214" height="270" rx="20" fill="#fff" opacity=".96"/>
+                <g fill="#7b61d9">
+                  <rect x="292" y="44" width="92" height="7" rx="3.5"/><rect x="292" y="66" width="76" height="7" rx="3.5"/>
+                  <rect x="292" y="88" width="98" height="7" rx="3.5"/><rect x="292" y="110" width="70" height="7" rx="3.5"/>
+                </g>
+                <rect x="402" y="40" width="52" height="46" rx="8" fill="#ff7a8a"/>
+                <path d="M416 56h6l4 14h16l3-10h-20" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="292" y="150" width="46" height="46" rx="9" fill="#1fb89a"/>
+                <rect x="348" y="150" width="46" height="46" rx="9" fill="#27386b"/>
+                <rect x="404" y="150" width="46" height="46" rx="9" fill="#7b61d9"/>
+                <rect x="292" y="212" width="158" height="46" rx="10" fill="#efe9ff"/>
+              </g>
+
+              <!-- floating parcels -->
+              <g class="parcel p1"><rect x="424" y="236" width="64" height="46" rx="6" fill="#f7b44f"/><path d="M456 236v46M424 258h64" stroke="#e08f1f" stroke-width="3"/></g>
+              <g class="parcel p2"><rect x="448" y="320" width="62" height="44" rx="6" fill="#8a6ff0"/><path d="M479 320v44" stroke="#5e44c8" stroke-width="3"/></g>
+
+              <!-- ground -->
+              <path d="M0 392H540" stroke="rgba(255,255,255,.75)" stroke-width="2"/>
+
+              <!-- truck -->
+              <g class="truck">
+                <rect x="70" y="190" width="190" height="150" rx="12" fill="#f7a24a"/>
+                <g transform="rotate(-10 150 255)" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="30" letter-spacing="1">
+                  <text x="86" y="262">EXPRESS</text>
+                </g>
+                <path d="M92 300h92M92 314h64" stroke="rgba(255,255,255,.7)" stroke-width="3" stroke-linecap="round"/>
+                <path d="M12 300 Q12 262 44 252 L70 252 V340 H12 Z" fill="#8a6ff0"/>
+                <path d="M30 266 Q32 262 42 262 L58 262 V296 H28 Z" fill="#dfeaff"/>
+                <rect x="10" y="334" width="256" height="12" rx="6" fill="#5e44c8"/>
+                <g class="wheel"><circle cx="58" cy="352" r="24" fill="#27386b"/><circle cx="58" cy="352" r="11" fill="#cfd8f5"/><path d="M58 341v22M47 352h22" stroke="#27386b" stroke-width="3"/></g>
+                <g class="wheel"><circle cx="206" cy="352" r="24" fill="#27386b"/><circle cx="206" cy="352" r="11" fill="#cfd8f5"/><path d="M206 341v22M195 352h22" stroke="#27386b" stroke-width="3"/></g>
+              </g>
+              <g class="speed" stroke="rgba(255,255,255,.7)" stroke-width="3" stroke-linecap="round"><path d="M-6 280h-28M-6 300h-40M-6 320h-22"/></g>
+
+              <!-- courier with pallet jack -->
+              <g class="courier">
+                <circle cx="340" cy="226" r="13" fill="#f3b790"/>
+                <path d="M326 222 Q340 206 354 222 Q344 214 326 222Z" fill="#27386b"/>
+                <rect x="324" y="240" width="32" height="56" rx="12" fill="#ffd23f"/>
+                <path d="M334 296 L326 372M346 296 L362 366" stroke="#27386b" stroke-width="10" stroke-linecap="round"/>
+                <path d="M326 262 L308 292" stroke="#f3b790" stroke-width="8" stroke-linecap="round"/>
+                <rect x="278" y="344" width="86" height="12" rx="3" fill="#ffd23f"/>
+                <rect x="284" y="318" width="40" height="26" rx="3" fill="#f7a24a"/><rect x="326" y="324" width="34" height="20" rx="3" fill="#f7b44f"/>
+                <path d="M308 292 L296 344" stroke="#27386b" stroke-width="4"/>
+                <circle cx="292" cy="362" r="6" fill="#27386b"/><circle cx="352" cy="362" r="6" fill="#27386b"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <!-- Service cards link customers to the matching order form. -->
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">What we do</span>
+            <h2>Integrated solutions that move your business forward.</h2>
+            <p>
+              From sourcing and storage to distribution and monitoring, we design logistics
+              strategies that reduce delays, cut costs, and improve visibility.
+            </p>
+          </div>
+
+          <div class="services-grid">
+            <article class="service-card sell-card">
+              <div class="icon-box" aria-hidden="true">
+                <svg viewBox="0 0 64 64" focusable="false">
+                  <defs>
+                    <linearGradient id="foodBag" x1="0" y1="0" x2="1" y2="1">
+                      <stop stop-color="#64c0ff"/><stop offset=".48" stop-color="#2388e8"/><stop offset="1" stop-color="#1457b2"/>
+                    </linearGradient>
+                    <linearGradient id="foodFold" x1="0" y1="0" x2="0" y2="1">
+                      <stop stop-color="#eaf7ff"/><stop offset="1" stop-color="#a9dcff"/>
+                    </linearGradient>
+                    <filter id="foodShadow" x="-30%" y="-30%" width="160%" height="170%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#123253" flood-opacity=".24"/>
+                    </filter>
+                  </defs>
+                  <path d="M23 24v-4a9 9 0 0 1 18 0v4" fill="none" stroke="#173957" stroke-width="3.5" stroke-linecap="round"/>
+                  <path d="M25 23v-3a7 7 0 0 1 14 0v3" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".85"/>
+                  <path d="M13 25h38l-4 30H17z" fill="url(#foodBag)" stroke="#123253" stroke-width="2" stroke-linejoin="round" filter="url(#foodShadow)"/>
+                  <path d="M13 28h38l-1.1 5H14z" fill="url(#foodFold)"/>
+                  <path d="m18 35 1 16M46 35l-2 16" stroke="#fff" stroke-width="1.3" opacity=".3"/>
+                  <path d="M24 40h16a2 2 0 0 1 2 2v7H22v-7a2 2 0 0 1 2-2Z" fill="#f5fbff" opacity=".96"/>
+                  <path d="M26 44h12" stroke="#f1a440" stroke-width="1.8" stroke-linecap="round"/>
+                  <circle cx="28" cy="47" r="1.3" fill="#61b86b"/><circle cx="36" cy="47" r="1.3" fill="#e97855"/>
+                  <path d="M25 18c-2-3 1-4 2-6M32 17c-2-3 1-4 2-6M39 18c-2-3 1-4 2-6" fill="none" stroke="#f09a42" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <h3>Food Express</h3>
+              <p>
+                Fast and reliable delivery of food products, fresh goods, and essential supplies
+                across Cainta, Rizal.
+              </p>
+              <button type="button" class="sell-trigger" data-service="Food Express">Buy Item</button>
+            </article>
+
+            <article class="service-card sell-card">
+              <div class="icon-box icon-box-fashion" aria-hidden="true">
+                <svg viewBox="0 0 64 64" focusable="false">
+                  <defs>
+                    <linearGradient id="shirtFabric" x1="0" y1="0" x2="1" y2="1">
+                      <stop stop-color="#8bd5ff"/><stop offset=".42" stop-color="#3b9bea"/><stop offset="1" stop-color="#1761bb"/>
+                    </linearGradient>
+                    <linearGradient id="shirtSleeve" x1="0" y1="0" x2="1" y2="0">
+                      <stop stop-color="#2374cc"/><stop offset=".5" stop-color="#60baff"/><stop offset="1" stop-color="#1d67bd"/>
+                    </linearGradient>
+                    <filter id="shirtShadow" x="-30%" y="-30%" width="160%" height="170%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#123253" flood-opacity=".25"/>
+                    </filter>
+                  </defs>
+                  <path d="M28 17c0 3 2 5 4 5s4-2 4-5" fill="none" stroke="#183855" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="m24 20-12 7 5 11 7-3v17h16V35l7 3 5-11-12-7c-.7 4-3.8 7-8 7s-7.3-3-8-7Z" fill="url(#shirtFabric)" stroke="#163c61" stroke-width="2" stroke-linejoin="round" filter="url(#shirtShadow)"/>
+                  <path d="m24 22-8 5 3 7 5-2M40 22l8 5-3 7-5-2" fill="url(#shirtSleeve)" stroke="#d9f2ff" stroke-width=".8" stroke-linejoin="round" opacity=".9"/>
+                  <path d="M28 29c1.5 2 2.7 3 4 3s2.5-1 4-3M23 36v13M41 36v13" fill="none" stroke="#c6eaff" stroke-width="1.1" opacity=".7"/>
+                  <path d="M28 38h8" stroke="#e9f7ff" stroke-width="1.5" stroke-linecap="round" opacity=".75"/>
+                  <path d="m46 20 7-4 5 9-8 4z" fill="#f3aa50" stroke="#714d2c" stroke-width="1.3" stroke-linejoin="round"/>
+                  <circle cx="51.5" cy="20.5" r="1" fill="#fff1ce"/>
+                  <path d="m46 21-4 3" stroke="#f3aa50" stroke-width="1.3"/>
+                </svg>
+              </div>
+              <h3>Online Bazaar</h3>
+              <p>
+                Safe and timely delivery for garments, apparel items, and retail products from
+                suppliers to customers.
+              </p>
+              <button type="button" class="sell-trigger" data-service="Online Bazaar">Buy Item</button>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <!-- Company overview and service performance figures. -->
+        <div class="container feature-wrap">
+          <div class="feature-panel">
+            <h3>Built for resilience, speed, and control.</h3>
+            <ul class="feature-list">
+              <li>Local logistics support across Cainta, Rizal and nearby communities.</li>
+              <li>Responsive operations team with proactive issue tracking and reporting.</li>
+              <li>Custom supply chain planning tailored to your business model and demand cycles.</li>
+              <li>Data-driven forecasting that improves inventory flow and service reliability.</li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="section-head" style="margin-bottom: 18px;">
+              <span class="eyebrow">Why choose us</span>
+              <h2>Dependable logistics support across every stage.</h2>
+            </div>
+
+            <div class="stats-box">
+              <div class="stat-card">
+                <strong>98.6%</strong>
+                <p>Customer satisfaction rate</p>
+              </div>
+
+              <div class="stat-card">
+                <strong>35%</strong>
+                <p>Average cost reduction</p>
+              </div>
+
+              <div class="stat-card">
+                <strong>20+</strong>
+                <p>Partner networks</p>
+              </div>
+
+              <div class="stat-card">
+                <strong>1 yr</strong>
+                <p>Industry expertise</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="process">
+        <!-- Four steps summarize the logistics workflow. -->
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">How it works</span>
+            <h2>Simple process. Strong performance.</h2>
+          </div>
+
+          <div class="process-grid">
+            <div class="process-step">
+              <div class="step-number">1</div>
+              <h3>Assess</h3>
+              <p>We review your supply chain goals, volume, and delivery demands.</p>
+            </div>
+
+            <div class="process-step">
+              <div class="step-number">2</div>
+              <h3>Plan</h3>
+              <p>We build a tailored logistics model to optimize routes and inventory flow.</p>
+            </div>
+
+            <div class="process-step">
+              <div class="step-number">3</div>
+              <h3>Execute</h3>
+              <p>Our team handles warehousing, transport, fulfillment, and tracking.</p>
+            </div>
+
+            <div class="process-step">
+              <div class="step-number">4</div>
+              <h3>Improve</h3>
+              <p>We monitor performance and refine operations for ongoing efficiency gains.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <!-- Contact call-to-action routes visitors to the company email. -->
+        <div class="container">
+          <div class="cta">
+            <div>
+              <h3>Need a supply chain partner you can trust?</h3>
+              <p>Let’s build a logistics strategy that keeps your business moving.</p>
+            </div>
+            <a href="mailto:cainta1express@gmail.com" class="btn btn-primary">Contact Us</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer repeats key navigation, support, and contact details. -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a href="#home" class="logo" aria-label="Cainta One Express home">
+              <span class="logo-mark" aria-hidden="true">
+                <img src="favicon.svg" alt="" width="46" height="46" />
+              </span>
+              <span style="color: white;">Cainta One Express</span>
+            </a>
+            <p style="margin-top: 14px; max-width: 260px;">
+              Smart logistics solutions for supply, warehousing, transportation, and fulfillment.
+            </p>
+          </div>
+
+          <div>
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#about">About</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#process">Process</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Support</h4>
+            <ul>
+              <li><a href="#contact">Quote Request</a></li>
+              <li><a href="#contact">Help Center</a></li>
+              <li><a href="#contact">Customer Care</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Contact</h4>
+            <ul>
+              <li>09566753142</li>
+              <li>cainta1express@gmail.com</li>
+              <li>Cainta, Rizal</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <!-- Popup form for sellers using Food Express and Online Bazaar -->
+    <!-- JavaScript on the shared page controls modal visibility and submission. -->
+    <div class="sell-modal" id="sell-modal" aria-hidden="true">
+      <div class="sell-modal-backdrop" data-close-modal></div>
+      <div class="sell-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="sell-modal-title">
+        <button type="button" class="sell-modal-close" aria-label="Close popup" data-close-modal>×</button>
+        <h3 id="sell-modal-title">Buy from Food Express</h3>
+        <p id="sell-modal-subtitle">Request the item you want and we will help with your order.</p>
+
+        <form id="sell-form">
+          <input type="hidden" id="sell-service" name="service" value="Food Express" />
+
+          <div class="sell-field">
+            <label for="item-search">Search item</label>
+            <input id="item-search" name="itemSearch" type="text" placeholder="Search for an item you want to buy" required />
+          </div>
+
+          <div class="sell-field">
+            <label for="item-name">Item name</label>
+            <input id="item-name" name="itemName" type="text" placeholder="e.g. Chicken, rice, snacks" required />
+          </div>
+
+          <div class="sell-grid">
+            <div class="sell-field">
+              <label for="item-category">Category</label>
+              <select id="item-category" name="category">
+                <option>Food</option>
+                <option>Fashion</option>
+                <option>Home</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="sell-field">
+              <label for="item-price">Budget</label>
+              <input id="item-price" name="price" type="number" min="1" placeholder="250" required />
+            </div>
+          </div>
+
+          <div class="sell-field">
+            <label for="item-details">Order details</label>
+            <textarea id="item-details" name="details" rows="4" placeholder="Tell us what you want to buy and how many items." required></textarea>
+          </div>
+
+          <div class="sell-field">
+            <label for="seller-contact">Buyer contact</label>
+            <input id="seller-contact" name="contact" type="text" placeholder="Your phone or email" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary sell-submit">Send Order Request</button>
+        </form>
+
+        <p id="sell-success" class="sell-success" hidden>Your order request has been sent successfully.</p>
+      </div>
+    </div>
+  </body>
+</html>

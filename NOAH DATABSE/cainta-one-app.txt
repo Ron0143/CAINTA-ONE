@@ -1,0 +1,12 @@
+Cainta One App
+Version: 1.0.0
+
+This is a demo app download file for Cainta One Express.
+
+Features:
+- Fast delivery tracking
+- Easy order updates
+- Customer support access
+- Logistics updates for Cainta, Rizal
+
+Thank you for using Cainta One Express.
